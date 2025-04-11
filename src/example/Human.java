@@ -11,10 +11,6 @@ public class Human extends Entity {
 
     @Override
     public Human clone() {
-        try {
-            return (Human) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
+        return (Human) super.clone();
     }
 }
