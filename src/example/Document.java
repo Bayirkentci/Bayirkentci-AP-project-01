@@ -6,7 +6,7 @@ import db.Trackable;
 import java.util.Date;
 
 public class Document extends Entity implements Trackable {
-    String content;
+    public String content;
     public static final int Document_ENTITY_CODE = 10;
 
     public Document(String content) {

@@ -5,6 +5,7 @@ import db.exception.InvalidEntityException;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Database {
@@ -16,6 +17,12 @@ public class Database {
         Validator validator = validators.get(e.getEntityCode());
         if (validator != null) {
             validator.validate(e);
+        }
+        if (e instanceof Trackable) {
+            Date now = new Date();
+            Trackable t = (Trackable) e;
+            t.setCreationDate(now);
+            t.setLastModificationDate(now);
         }
         e.id = entities.size() + 1;
         entities.add(e.copy());
@@ -46,7 +53,13 @@ public class Database {
     }
     public static void update(Entity e) throws InvalidEntityException {
         Validator validator = validators.get(e.getEntityCode());
-
+        if (validator != null) {
+            validator.validate(e);
+        }
+        if (e instanceof Trackable) {
+            Date now = new Date();
+            ((Trackable) e).setLastModificationDate(now);
+        }
         for (int i = 0; i < entities.size(); i++) {
             if (entities.get(i).id == e.id) {
                 entities.set(i, e.copy());
