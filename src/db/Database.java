@@ -4,10 +4,12 @@ import db.exception.EntityNotFoundException;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Database {
     private static ArrayList<Entity> entities = new ArrayList<>();
     private static ArrayList<Integer> deletedIds = new ArrayList<>();
+    private static HashMap<Integer, Validator> validators = new HashMap<>();
 
     public static void add(Entity e) {
         e.id = entities.size() + 1 ;
@@ -44,5 +46,10 @@ public class Database {
             }
             throw new EntityNotFoundException(e.id);
         }
+    }
+    public static void registerValidator(int entityCode, Validator validator) {
+        if (validators.containsKey(entityCode)) {
+            throw new IllegalArgumentException("Validator already registered for entity code: " + entityCode);
+        } validators.put(entityCode, validator);
     }
 }
