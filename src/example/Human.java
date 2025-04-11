@@ -10,10 +10,11 @@ public class Human extends Entity {
     }
 
     @Override
-    public Human copy() {
-        Human copyHuman = new Human(name);
-        copyHuman.id = id;
-
-        return copyHuman;
+    public Human clone() {
+        try {
+            return (Human) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
