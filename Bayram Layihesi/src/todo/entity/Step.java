@@ -1,30 +1,60 @@
 package todo.entity;
 
-import db.Entity;
+import java.util.Date;
 
-public class Step extends Entity {
+import db.Entity;
+import db.Trackable;
+
+public class Step extends Entity implements Trackable{
+
     public String title;
     public Status status;
     public int taskRef;
+    public static final int Step_ENTITY_CODE = 18;
 
-    public Step(String title, Status status, int taskRef) {
+    public enum Status {
+        NotStarted, Completed;
+    }
+
+    public Step(String title, int taskRef) {
         this.title = title;
-        this.status = status;
         this.taskRef = taskRef;
+        this.status = Status.NotStarted;
     }
 
     @Override
     public Entity copy() {
-        return null;
+        Step stepCopy = new Step(this.title, this.taskRef);
+        stepCopy.id = id;
+        stepCopy.status = status;
+        stepCopy.creationDate = creationDate;
+        stepCopy.lastModificationDate = lastModificationDate;
+
+        return stepCopy;
     }
 
     @Override
     public int getEntityCode() {
-        return 0;
+        return Step_ENTITY_CODE;
     }
 
-    enum Status {
-        NotStarted,
-        Completed;
+    @Override
+    public void setCreationDate(Date date) {
+        creationDate = date;
+    }
+
+    @Override
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    @Override
+    public void setLastModificationDate(Date date) {
+        lastModificationDate = date;
+    }
+
+    @Override
+    public Date getLastModificationDate() {
+        return lastModificationDate;
     }
 }
