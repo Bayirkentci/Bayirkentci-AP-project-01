@@ -3,9 +3,15 @@ package todo.entity;
 import db.Entity;
 
 public class Step extends Entity {
-    String title;
-    Status status;
-    int taskRef;
+    public String title;
+    public Status status;
+    public int taskRef;
+
+    public Step(String title, Status status, int taskRef) {
+        this.title = title;
+        this.status = status;
+        this.taskRef = taskRef;
+    }
 
     @Override
     public Entity copy() {
